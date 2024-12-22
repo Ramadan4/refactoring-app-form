@@ -1,0 +1,50 @@
+{
+  "compilerOptions": {
+    "target": "ES6" /* Ensures compatibility with older browsers. */,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ] /* Include the DOM and modern JavaScript features. */,
+    "module": "esnext" /* Use ES module syntax. */,
+    "strict": true /* Enable all strict type-checking options. */,
+    "esModuleInterop": true /* Allow compatibility with CommonJS modules. */,
+    "skipLibCheck": true /* Skip type checking for declaration files. */,
+    "forceConsistentCasingInFileNames": true /* Ensure correct casing in imports. */,
+    "moduleResolution": "node" /* Resolve modules in the Node.js style. */,
+    "resolveJsonModule": true /* Allow importing .json files. */,
+    "isolatedModules": true /* Ensures TypeScript only checks one file at a time for faster builds. */,
+    "jsx": "preserve" /* Keep JSX as-is for Next.js to handle. */,
+    "incremental": true /* Enable incremental compilation for better performance. */,
+    "noFallthroughCasesInSwitch": true /* Avoid unintentional fallthroughs in switch statements. */,
+    "allowJs": true /* Allow JavaScript files in the project. */,
+    "strictNullChecks": true /* Ensure null and undefined are handled explicitly. */,
+    "baseUrl": "." /* Specify the base path for imports. */,
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ],
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/pages/*": [
+        "pages/*"
+      ],
+      "@/utils/*": [
+        "utils/*"
+      ],
+      "@/types/*": [
+        "types/*"
+      ]
+    } /* Use path aliases for cleaner imports. */,
+    "noEmit": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
