@@ -1,8 +1,8 @@
-import React from "react";
-import Form, { withTheme } from "@rjsf/core";
+import React, { useEffect } from "react";
+import Form from "@rjsf/core";
 import validator from "@rjsf/validator-ajv8";
 
-import { RJSFValidationError, ErrorListProps, RJSFSchema } from "@rjsf/utils";
+import { RJSFSchema } from "@rjsf/utils";
 
 const schema: RJSFSchema = {
   title: "Simple Form Example",
@@ -29,13 +29,36 @@ const uiSchema = {
   },
 };
 
-const customFormats = {
-  "phone-us": /\(?\d{3}\)?[\s-]?\d{3}[\s-]?\d{4}$/,
-};
-
-const log = (type: string) => console.log.bind(console, type);
+function transformErrors(errors: any) {
+  return errors.map((error: any) => {
+    if (error.name === "required") {
+      error.message = "هذا الحقل مطلوب. يرجى ملؤه.";
+    }
+    if (error.name === "pattern") {
+      error.message = "يُسمح بالأرقام فقط.";
+    }
+    return error;
+  });
+}
 
 const AppForm = () => {
+  useEffect(() => {
+    // Customizing native validation error messages
+    document.querySelectorAll("input[required]").forEach((input) => {
+      input.addEventListener("invalid", (event: any) => {
+        const target = event.target as HTMLInputElement;
+        target.setCustomValidity("هذا الحقل مطلوب.");
+      });
+
+      input.addEventListener("input", (event) => {
+        const target = event.target as HTMLInputElement;
+        target.setCustomValidity("");
+      });
+    });
+  }, []);
+
+  const log = (type: string) => console.log.bind(console, type);
+
   return (
     <div>
       <h1>React JSON Schema Form Example</h1>
@@ -43,7 +66,11 @@ const AppForm = () => {
         schema={schema}
         uiSchema={uiSchema}
         validator={validator}
-        onChange={log("changed------>")}
+        transformErrors={transformErrors}
+        noHtml5Validate={false} // Keep browser validation for fields
+        liveValidate={true}
+        showErrorList={false}
+        onChange={log("changed")}
         onSubmit={log("submitted")}
         onError={log("errors")}
       />
